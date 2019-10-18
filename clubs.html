@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<head>
+    <title>Clubs Ranking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+    var clubs = 
+    "{ \"DECA\":[ \"Marketing\", \"Events\", \"Business Development\", \"Training\"]," + 
+    "\"MESA\":[ \"Marketing\", \"Business Development\", \"Finance\", \"Student Engagement\", \"Clubs & Academics\"]," + 
+    "\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
+    "\"TMG\":[ \"Marketing\", \"Business Development\", \"Events\", \"IT\"]," + 
+    "\"HRA\":[ \"Marketing & Analytics\", \"Operations\", \"Corporate Relations\", \"Project Management\"]," + 
+    "\"AOA\":[ \"Marketing\", \"Events\", \"Business Development\"]," + 
+    "\"MIBA\":[ \"Marketing\", \"Events\", \"Business Development\", \"External Relations\", \"Innovation\"]," + 
+    "\"MTA\":[ \"Marketing\", \"Operations\", \"Corporate Relations\", \"Web Development\"]," + 
+    "\"WIBA\":[ \"Marketing\", \"Events\"]," + 
+    "\"ENIGMA\":[ \"Marketing\", \"Operations\"]," +
+    "\"SBA\":[ \"Marketing\", \"Operations\", \"Corporate Relations\"]" + 
+    "}";
+
+    
+    var clubs = JSON.parse(clubs);
+
+    window.onload = function()
+    {
+        var clubSelect = document.getElementById("clubSelect");
+
+        for(var key in clubs)
+        {
+            var option = document.createElement("option");
+            option.text = key;
+            option.value = key;
+            clubSelect.append(option);
+        }
+
+
+    }
+
+    function clubSelected()
+    {
+        var clubSelect = document.getElementById("clubSelect");
+        var selected = clubSelect.options[clubSelect.selectedIndex].value;
+
+        var ranking = document.getElementById("rankingContainer");
+        ranking.style="text-align: center;";
+        ranking.textContent = "";
+        var positions = clubs[selected];
+        console.log(positions);
+
+        for(var pos in positions)
+        {
+
+            var positionRanking = document.createElement("div");
+            positionRanking.style="margin-bottom: 3vh";
+            positionRanking.innerHTML = positions[pos] + ":";
+            var input = document.createElement("input");
+            for(var i = 1; i <= 8; i++)
+            {
+                var input = document.createElement("input");
+                input.type="text";
+                input.id=positions[pos]+i;
+                input.size="40";
+                positionRanking.append(document.createElement("br"));
+                positionRanking.innerHTML += i + ": ";
+                positionRanking.append(input);
+            }
+            ranking.append(positionRanking);
+
+        }
+
+
+
+
+
+    }
+
+    function submitRanking()
+        {
+            var clubSelect = document.getElementById("clubSelect");
+            var selected = clubSelect.options[clubSelect.selectedIndex].value;
+
+            var positions = clubs[selected];
+            var rankingData = {};
+            rankingData["club"] = selected;
+
+
+            for(var pos in positions)
+            {
+                var posName = positions[pos];
+                var posRankings = "";
+                for(var i = 1; i <= 8; i++)
+                {
+                    var divName = posName + i;
+                    var input = document.getElementById(divName);
+                    posRankings += input.value;
+                    if(i != 8)
+                    {
+                        posRankings += ","
+                    }
+
+                }
+                rankingData[posName] = posRankings;
+            }
+
+            var xhr = new XMLHttpRequest();
+            var url = "/hiring/clubs";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    if(json.result == true)
+                    {
+                        document.getElementById("parent").innerHTML = "Thank you"
+                    }
+                    else
+                    {
+                        document.getElementById("parent").innerHTML = "There was an error, contact Eric"
+                    }
+                }
+            };
+            var data = JSON.stringify(rankingData);
+            xhr.send(data);
+
+
+        }
+
+    </script>
+
+</head>
+<html>
+<body>
+    <div style="text-align: center; margin-top: 10vh;" id="parent">
+        For this form, please put in the candidates' emails for their ranking.</br>
+        If you have any questions, please contact Eric</br>
+        </br>
+        <form action="/hiring/clubs" method="post" id="form">
+            Which club are you?</br>
+            <select id="clubSelect" onchange="clubSelected()">
+                    <option selected="selected">
+                        </option>
+            </select>
+            <div id="rankingContainer" style="margin-bottom: 10px">
+
+
+
+            </div>
+            <input type="button" value="Submit" onclick="submitRanking()">
+        </form>
+
+    </div>
+
+</body>
+</html> 

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<head>
+    <title>Applicant Ranking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+    var clubs = 
+    "{ \"DECA\":[ \"Marketing\", \"Events\", \"Business Development\", \"Training\"]," + 
+    "\"MESA\":[ \"Marketing\", \"Business Development\", \"Finance\", \"Student Engagement\", \"Clubs & Academics\"]," + 
+    "\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
+    "\"TMG\":[ \"Marketing\", \"Business Development\", \"Events\", \"IT\"]," + 
+    "\"HRA\":[ \"Marketing & Analytics\", \"Operations\", \"Corporate Relations\", \"Project Management\"]," + 
+    "\"AOA\":[ \"Marketing\", \"Events\", \"Business Development\"]," + 
+    "\"MIBA\":[ \"Marketing\", \"Events\", \"Business Development\", \"External Relations\", \"Innovation\"]," + 
+    "\"MTA\":[ \"Marketing\", \"Operations\", \"Corporate Relations\", \"Web Development\"]," + 
+    "\"WIBA\":[ \"Marketing\", \"Events\"]," + 
+    "\"ENIGMA\":[ \"Marketing\", \"Operations\"]," + 
+    "\"SBA\":[ \"Marketing\", \"Operations\", \"Corporate Relations\"]" + 
+    "}";
+
+    
+    var clubs = JSON.parse(clubs);
+
+    window.onload = function()
+    {
+        var clubSelect = document.getElementById("clubSelect1");
+
+        for(var key in clubs)
+        {
+            var option = document.createElement("option");
+            option.text = key;
+            option.value = key;
+            clubSelect.append(option);
+        }
+
+    }
+
+    function clubSelected(num)
+    {
+        var clubSelect = document.getElementById("clubSelect" + num);
+        var selected = clubSelect.options[clubSelect.selectedIndex].value;
+
+        var positions = clubs[selected];
+
+        var container = document.getElementById("container" + num);
+        if(container.children.length > 1)
+        {
+            container.removeChild(container.lastChild);
+        }
+
+        var posSelect = document.createElement("select")
+        posSelect.id = "position" + num;
+        var defOption = document.createElement("option")
+        defOption.selected = "selected";
+        posSelect.append(defOption);
+
+        for(var pos in positions)
+        {
+            var name = positions[pos];
+            var option = document.createElement("option");
+            option.text = name;
+            option.value = name;
+            posSelect.append(option);
+        }
+
+        container.append(posSelect);
+    }
+
+    function addPosition()
+    {
+        var rankingContainer = document.getElementById("rankingContainer");
+        var num = rankingContainer.children.length + 1;
+
+        var container = document.createElement("div");
+        container.id = "container" + num;
+        container.innerHTML += num + ": ";
+
+        var select = document.createElement("select");
+        select.id = "clubSelect" + num;
+        select.style = "margin-right: 5px";
+        select.setAttribute("onchange", "clubSelected(" + num + ");");
+
+        var defOption = document.createElement("option");
+        defOption.selected = "selected";
+        select.append(defOption);
+
+        for(var club in clubs)
+        {
+            var option = document.createElement("option");
+            option.text = club;
+            option.value = club;
+            select.append(option);
+        }
+
+        container.append(select);
+        rankingContainer.append(container);
+
+
+    }
+
+    function submitRanking()
+        {
+            var rankingContainer = document.getElementById("rankingContainer");
+            var num = rankingContainer.children.length;
+            var json = {};
+            json["share"] = document.getElementById("share").checked;
+            json["email"] = document.getElementById("emailInput").value;
+
+            var rankings = ""
+            for(var i = 1; i <= num; i++)
+            {
+                var club = document.getElementById("clubSelect" + i).value;
+                if(club != "")
+                {
+                    var position = document.getElementById("position" + i).value;
+                    if(position != "")
+                    {
+                        var pos = club + " " + position + ",";
+                        rankings += pos;
+                    }
+                }
+
+
+
+            }
+
+            var length = rankings.length;
+                if(rankings.charAt(length - 1) == ',')
+                {
+                    rankings = rankings.substring(0, length - 1);
+                }
+
+            json["ranking"] = rankings;
+
+            var policies = document.getElementById("policies").checked;
+            var acceptance = document.getElementById("acceptance").checked;
+            var share2 = document.getElementById("share2").checked;
+            var share = document.getElementById("share").checked;
+
+            if(!policies || !acceptance || (share && !share2))
+            {
+                document.getElementById("warning").innerHTML = "Please agree to the conditions above."
+            }
+            else{
+
+                var xhr = new XMLHttpRequest();
+                var url = "/hiring/applicants";
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.result == true)
+                        {
+                            document.getElementById("parent").innerHTML = "Thank you"
+                        }
+                        else
+                        {
+                            document.getElementById("parent").innerHTML = "There was an error. Please contact Eric at eric.kalantyrski@gmail.com";
+                        }
+                    }
+                };
+                var data = JSON.stringify(json);
+                xhr.send(data);
+            }
+
+
+        }
+
+    </script>
+
+</head>
+<html>
+<body>
+    <div style="text-align: center; margin-top: 10vh;" id="parent">
+            Please only rank the clubs and positions that you are interested in joining. </br>
+            If you have any questions, please reach out to the contacts provided in the email. </br>
+            </br>
+        <form action="/hiring/clubs" method="post" id="form" style="margin-left: 20vw; margin-right: 20vw;">
+
+            Please input your email that you used in all your club applications:</br>
+            If you have applied using multiple emails, please contact mgmtclubs.utsc.utoronto@gmail.com immediately. </br>
+            <input type="text" id="emailInput" size="40">
+            </br>
+            </br>
+            Please rank the clubs and positions that you interviewed for, you can add as many as you like using the "Add Position" button.</br>
+            You may also freely change your rankings, by selecting a different club and position.</br>
+            To remove a ranking, change both the position and club to blank.</br>
+            <div id="rankingContainer" style="margin-top: 3vh; text-align: left; margin-left: 19vw">
+                <div id="container1">
+                    1:
+                    <select id="clubSelect1" onchange="clubSelected(1)" style="margin-right: 3px">
+                            <option selected="selected"></option>
+                    </select>
+                </div>
+            </div>
+            <input type="button" value="Add Position" onclick="addPosition()" style="margin-left: -14.5vw;text-align: left !important;">
+            </br>
+            </br>
+            </br>
+            <div style="text-align: left;">
+                <table style="width:80%; border-color: black;" border="1">
+                <tr>
+                    <th>Management Clubs that are under the One-Club Policy (non-exempt)</th>
+                    <th>Management Clubs that are not under the One-Club Policy (exempt)</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>MESA</li>
+                            <li>DECA</li>
+                            <li>AOA</li>
+                            <li>IS</li>
+                            <li>TMG</li>
+                            <li>HRA</li>
+                            <li>ENIGMA</li>
+                            <li>SBA</li>
+                            <li>MIBA</li>
+                            <li>ESO</li>
+                            <li>MTA</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>MCG</li>
+                            <li>SMF</li>
+                            <li>LIVE</li>
+                            <li>STRIVE</li>
+                            <li>BSB</li>
+                            <li>WIBA</li>
+                        </ul>
+                    </td>
+                </tr>
+                </table>
+                </br>
+                <input type="checkbox" id="share">I have applied or plan to apply to a club exempt from the One-Club policy and have also applied to a non-exempt club. I would like the option of joining both clubs (i.e. one exempt club, and one non-exempt club) if I am accepted to both. </br>
+                </br>
+                <div style="margin-left:5vw">
+                    <input type="checkbox" id="share2">
+                    I understand that by checking the above box, I will be removed from the candidate pool of MESA, DECA and MIBA who have expressed interest in exclusive associates for this associate hiring cycle. </br>
+                </div>
+                </br>
+                <input type="checkbox" id="policies">I understand that if I apply to another club under the Management Clubs Umbrella that hires off the traditional hiring timeline (STRIVE, LIVE, MCG, SMF), I will be subject to policies that ensure fairness and communication between all parties involved.</br>
+                </br>
+                <input type="checkbox" id="acceptance">I understand that the position I will be matched with is partially dependant on my rankings and that the final match I receive is my best possible match based on club preferences. I understand that my final match cannot be rejected as it is the best possible option for me. Consequently, I have only ranked clubs and positions for which I wish to join.</br>
+
+            </div>
+
+            <div id="warning" style="text-align: center; margin-top: 20px; color: red">
+
+            </div>
+            <input type="button" value="Submit" onclick="submitRanking()" style="margin-top: 3vh">
+        </form>
+
+    </div>
+
+</body>
+</html> 
