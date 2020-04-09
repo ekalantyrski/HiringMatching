@@ -7,8 +7,8 @@
     <script>
     var clubs = 
     "{ \"DECA\":[ \"Director of Marketing\", \"Director of Events\", \"Director of Digital Marketing\", \"Director of Finance\", \"Director of Training\", \"Director of Human Resources\", \"Director of Corporate Relations\", \"Director of Information Technology\"]," + 
-    "\"MESA\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\"]," + 
-    "\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
+    "\"MESA\":[ \"Social Operations Manager\", \"International Advocacy Manager\", \"Marketing Manager\", \"Academic Advocacy Manager\", \"Operations Manager\", \"Alumni Connections Manager\", \"Double Degree Advocacy Manager\", \"Human Resources Manager\", \"Finance Manager\", \"Corporate Relations Manager\"]," + 
+    "\"IS\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\", \"Director of Web Development\"]," + 
     "\"TMG\":[ \"Marketing Director\", \"Events Director\", \"Project Director\", \"Social Media Director\", \"Corporate Relations Director\", \"Finance Director\", \"Curriculum Director\"]," + 
     "\"HRA\":[ \"Director of Finance\", \"Director of Event Logistics\", \"Director of Multimedia Design\", \"Director of Web and Social Media\", \"Director of Member Engagement\", \"Director of Training and Development\", \"Director of Project Management\", \"Director of Corporate Relations\"]," + 
     "\"AOA\":[ \"Marketing Director\", \"Events Director\", \"CR Director\", \"Finance Director\", \"HR Director\", \"Data Analytics Director\", \"Digital Media Director\"]," + 
@@ -104,7 +104,7 @@
             var rankingContainer = document.getElementById("rankingContainer");
             var num = rankingContainer.children.length;
             var json = {};
-            json["share"] = 0;
+            json["share"] = false;
             json["email"] = document.getElementById("emailInput").value;
 
             var rankings = ""
@@ -135,8 +135,8 @@
 
             var policies = document.getElementById("policies").checked;
             var acceptance = document.getElementById("acceptance").checked;
-            var share2 = 0;
-            var share = 0;
+            var share2 = false;
+            var share = false;
 
             if(!policies || !acceptance /*||(share && !share2)*/)
             {
