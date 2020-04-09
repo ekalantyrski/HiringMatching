@@ -11,7 +11,7 @@ var connection = db.get_connection();
 
 var clubs = 
     "{ \"DECA\":[ \"Director of Marketing\", \"Director of Events\", \"Director of Digital Marketing\", \"Director of Finance\", \"Director of Training\", \"Director of Human Resources\", \"Director of Corporate Relations\", \"Director of Information Technology\"]," + 
-    "\"MESA\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\", \"Director of Web Development\"]," + 
+    "\"MESA\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\"]," + 
     "\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
     "\"TMG\":[ \"Marketing Director\", \"Events Director\", \"Project Director\", \"Social Media Director\", \"Corporate Relations Director\", \"Finance Director\", \"Curriculum Director\"]," + 
     "\"HRA\":[ \"Director of Finance\", \"Director of Event Logistics\", \"Director of Multimedia Design\", \"Director of Web and Social Media\", \"Director of Member Engagement\", \"Director of Training and Development\", \"Director of Project Management\", \"Director of Corporate Relations\"]," + 
