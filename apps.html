@@ -104,7 +104,7 @@
             var rankingContainer = document.getElementById("rankingContainer");
             var num = rankingContainer.children.length;
             var json = {};
-            json["share"] = document.getElementById("share").checked;
+            json["share"] = 0;
             json["email"] = document.getElementById("emailInput").value;
 
             var rankings = ""
@@ -135,7 +135,7 @@
 
             var policies = document.getElementById("policies").checked;
             var acceptance = document.getElementById("acceptance").checked;
-            var share2 = document.getElementById("share2").checked;
+            var share2 = 0;
             var share = document.getElementById("share").checked;
 
             if(!policies || !acceptance || (share && !share2))
@@ -200,7 +200,7 @@
             </br>
             </br>
             <div style="text-align: left;">
-                <table style="width:80%; border-color: black;" border="1">
+                <!-- <table style="width:80%; border-color: black;" border="1">
                 <tr>
                     <th>Management Clubs that are under the One-Club Policy (non-exempt)</th>
                     <th>Management Clubs that are not under the One-Club Policy (exempt)</th>
@@ -232,14 +232,14 @@
                         </ul>
                     </td>
                 </tr>
-                </table>
+                </table> -->
                 </br>
-                <input type="checkbox" id="share">I have applied or plan to apply to a club exempt from the One-Club policy and have also applied to a non-exempt club. I would like the option of joining both clubs (i.e. one exempt club, and one non-exempt club) if I am accepted to both. </br>
+                <!-- <input type="checkbox" id="share">I have applied or plan to apply to a club exempt from the One-Club policy and have also applied to a non-exempt club. I would like the option of joining both clubs (i.e. one exempt club, and one non-exempt club) if I am accepted to both. </br>
                 </br>
                 <div style="margin-left:5vw">
                     <input type="checkbox" id="share2">
                     I understand that by checking the above box, I will be removed from the candidate pool of MESA, DECA and MIBA who have expressed interest in exclusive associates for this associate hiring cycle. </br>
-                </div>
+                </div> -->
                 </br>
                 <input type="checkbox" id="policies">I understand that if I apply to another club under the Management Clubs Umbrella that hires off the traditional hiring timeline (STRIVE, LIVE, MCG, SMF), I will be subject to policies that ensure fairness and communication between all parties involved.</br>
                 </br>
