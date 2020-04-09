@@ -136,9 +136,9 @@
             var policies = document.getElementById("policies").checked;
             var acceptance = document.getElementById("acceptance").checked;
             var share2 = 0;
-            var share = document.getElementById("share").checked;
+            var share = 0;
 
-            if(!policies || !acceptance || (share && !share2))
+            if(!policies || !acceptance /*||(share && !share2)*/)
             {
                 document.getElementById("warning").innerHTML = "Please agree to the conditions above."
             }
