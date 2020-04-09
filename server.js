@@ -10,18 +10,18 @@ app.use(bodyParser.json());
 var connection = db.get_connection();
 
 var clubs = 
-    "{ \"DECA\":[ \"Director of Marketing\", \"Director of Events\", \"Director of Digital Marketing\", \"Director of Finance\", \"Director of Training\", \"Director of Human Resources\", \"Director of Corporate Relations\", \"Director of Information Technology\"]," + 
-    "\"MESA\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\"]," + 
-    "\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
-    "\"TMG\":[ \"Marketing Director\", \"Events Director\", \"Project Director\", \"Social Media Director\", \"Corporate Relations Director\", \"Finance Director\", \"Curriculum Director\"]," + 
-    "\"HRA\":[ \"Director of Finance\", \"Director of Event Logistics\", \"Director of Multimedia Design\", \"Director of Web and Social Media\", \"Director of Member Engagement\", \"Director of Training and Development\", \"Director of Project Management\", \"Director of Corporate Relations\"]," + 
-    "\"AOA\":[ \"Marketing Director\", \"Events Director\", \"CR Director\", \"Finance Director\", \"HR Director\", \"Data Analytics Director\", \"Digital Media Director\"]," + 
-    "\"MIBA\":[ \"Marketing\", \"Events\", \"Business Operations\", \"External Relations\", \"Innovation\"]," + 
-    "\"MTA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of Corporate Relations\", \"Director of Web Development\", \"Director of Curriculum\", \"Director of Case Competition\", \"Director of Finance\", \"Director of Internal Affairs\"]," + 
-    "\"WIBA\":[ \"Director of Digital Channels\", \"Director of Communications\", \"Director of Events\", \"Director of Strategic Initiatives\"]," + 
-    "\"ENIGMA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of IT\"]," + 
-    "\"SBA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of Corporate Relations\"]" + 
-    "}";
+"{ \"DECA\":[ \"Director of Marketing\", \"Director of Events\", \"Director of Digital Marketing\", \"Director of Finance\", \"Director of Training\", \"Director of Human Resources\", \"Director of Corporate Relations\", \"Director of Information Technology\"]," + 
+"\"MESA\":[ \"Director of Operations\", \"Director of Curriculum\", \"Director of Finance\", \"Director of Corporate Relations\", \"Director of Human Resources\", \"Director of Marketing\"]," + 
+"\"IS\":[ \"Marketing\", \"Operations\", \"Business Development\"]," + 
+"\"TMG\":[ \"Marketing Director\", \"Events Director\", \"Project Director\", \"Social Media Director\", \"Corporate Relations Director\", \"Finance Director\", \"Curriculum Director\"]," + 
+"\"HRA\":[ \"Director of Finance\", \"Director of Event Logistics\", \"Director of Multimedia Design\", \"Director of Web and Social Media\", \"Director of Member Engagement\", \"Director of Training and Development\", \"Director of Project Management\", \"Director of Corporate Relations\"]," + 
+"\"AOA\":[ \"Marketing Director\", \"Events Director\", \"CR Director\", \"Finance Director\", \"HR Director\", \"Data Analytics Director\", \"Digital Media Director\"]," + 
+"\"MIBA\":[ \"Marketing\", \"Events\", \"Business Operations\", \"External Relations\", \"Innovation\"]," + 
+"\"MTA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of Corporate Relations\", \"Director of Web Development\", \"Director of Curriculum\", \"Director of Case Competition\", \"Director of Finance\", \"Director of Internal Affairs\"]," + 
+"\"WIBA\":[ \"Director of Digital Channels\", \"Director of Communications\", \"Director of Events\", \"Director of Strategic Initiatives\"]," + 
+"\"ENIGMA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of IT\"]," + 
+"\"SBA\":[ \"Director of Marketing\", \"Director of Operations\", \"Director of Corporate Relations\"]" + 
+"}";
 
 var clubsObject = JSON.parse(clubs);
 
@@ -63,7 +63,7 @@ app.post('/hiring/applicants', function(req, res){
 
 
 app.use(express.static('public'));
-app.listen(8080, function() { 
+app.listen(8081, function() { 
 	console.log('listening')
 });
 
