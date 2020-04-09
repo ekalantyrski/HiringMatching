@@ -104,7 +104,7 @@
             var rankingContainer = document.getElementById("rankingContainer");
             var num = rankingContainer.children.length;
             var json = {};
-            json["share"] = false;
+            json["share"] = 0;
             json["email"] = document.getElementById("emailInput").value;
 
             var rankings = ""
@@ -135,8 +135,8 @@
 
             var policies = document.getElementById("policies").checked;
             var acceptance = document.getElementById("acceptance").checked;
-            var share2 = false;
-            var share = false;
+            var share2 = 0;
+            var share = 0;
 
             if(!policies || !acceptance /*||(share && !share2)*/)
             {
